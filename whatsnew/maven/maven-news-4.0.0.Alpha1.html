@@ -98,128 +98,82 @@
       </div>
       <!-- activate the tab by adding the 'active' class -->
       <script>
-        document.getElementById("home").className += " active";
+        document.getElementById("docs").className += " active";
       </script>
       <div id="content-wrapper">
-        
+        <div class='breadcrumb'><a class='breadcrumb_anchor' href='http://maxandersen.github.com/jbosstools-website/index.html'
+                  >Home</a> / <a class='breadcrumb_anchor' href='http://maxandersen.github.com/jbosstools-website/whatsnew/index.html'
+                  >New and Noteworthy</a> / <a class='breadcrumb_anchor' href='http://maxandersen.github.com/jbosstools-website/whatsnew/maven/maven-news-4.0.0.Alpha1.html'
+                  >Maven-news-4.0.0.alpha1</a></div>
         <div class="row-fluid">
-          <div class="hero-unit hidden-phone">
-            <img alt="JBoss Tools" src="http://maxandersen.github.com/jbosstools-website/images/tools/jbt-carousel-jaxrs.png">
-            <div class="hero-content">
-              <h1>
-                JBoss Tools
-              </h1>
-              <h2>
-                Eclipse Plugins for
-                JBoss Technology
-              </h2>
-              <p>
-                <a class="btn btn-primary btn-large" href="http://maxandersen.github.com/jbosstools-website/downloads">
-                  <i class="icon-download"></i>
-                  Download
-                </a>
-              </p>
+          <div class="span3">
+            <div id="menu-level2">
+              <ul>
+                <li class="unselected">
+                  <a href="../index.html">Overview</a>
+                </li>
+                <li class="unselected">
+                  <a href="/whatsnew/cdi/cdi-news-4.0.0.Alpha1.html">CDI</a>
+                </li>
+                <li class="unselected">
+                  <a href="/whatsnew/as/as-news-4.0.0.Alpha1.html">JBoss AS Tools</a>
+                </li>
+                <li class="unselected">
+                  <a href="/whatsnew/jst/jst-news-4.0.0.Alpha1.html">JST/JSF</a>
+                </li>
+                <li class="selected">
+                  <a href="/whatsnew/maven/maven-news-4.0.0.Alpha1.html">Maven Tools</a>
+                </li>
+                <li class="unselected">
+                  <a href="/whatsnew/vpe/vpe-news-4.0.0.Alpha1.html">Visual Page Editor/BrowserSim</a>
+                </li>
+              </ul>
             </div>
           </div>
-        </div>
-        <div class="row-fluid">
-          <hr>
-        </div>
-        <div class="row-fluid" id="sections">
-          <section class="span4">
-            <header>
-              <h3>
-                <i class="icon-magic"></i>
-                <a href="http://maxandersen.github.com/jbosstools-website/features">
-                  Feature Highlight
-                </a>
-              </h3>
-            </header>
-            <div class="item center">
-              <span class="tagline"></span>
-              <a class="block" href="/features/openshift.html">
-                <img src="./features/images/openshift_icon_256px.png">
-              </a>
+          <div class="span9">
+            <h2>What's New in Maven Tools 4.0.0.Alpha1</h2>
+            <hr>
+            <div class="whatsnew">
+              <h1>JBoss Maven Integration</h1>
+              <dl>
+              	<dt>New m2e-wtp 0.16.0 (eclipse.org) requirement</dt>
+              	<dd><p>m2eclipse-wtp is moving to Eclipse.org as m2e-wtp. As such the existing dependency on m2eclipse-wtp as been changed to m2e-wtp 0.16.0. Since the two plugins overlap and can not coexist, upgrading JBoss Tools is gonna be a bit trickier this time around :</p>
+              <ul>
+              	<li>If you added the JBoss Tools 4.0 update site to your list of Available Update Sites, doing &#8220;Help &gt; Find Updates&#8221; should (after a looong time) find m2e-wtp as a suitable replacement for m2eclipse-wtp, and everything should update properly</li>
+              	<li>If you try to update your JBoss Tools installation via &#8220;Help &gt; Install New Software&#8230;&#8221;, m2e-wtp won&#8217;t install because of the conflict with m2eclipse-wtp (this is a bug in p2)</li>
+              	<li>The safest path is to uninstall all previous Maven plugins/features or start from a fresh Eclipse installation</li>
+              </ul>
+              <p>On a somewhat related note, we made sure our JBoss Tools Maven features are fully compatible with the new m2e 1.2 (Juno SR1).</p>
+              <div class="related_jira">Related JIRA: <a href="https://issues.jboss.org/browse/JBIDE-12293">JBIDE-12293</a>.</div></dd>
+              </dl>
+              <dl>
+              	<dt>Conversion of classpath entries to Maven dependencies</dt>
+              	<dd><p>Converting a java project to Maven is not always an easy task. m2e 1.1 introduced a new API that could help improve that conversion process. For instance, m2e and m2e-wtp can help you convert your Java (EE) eclipse project settings to their maven plugin configuration counterparts, but so far converting Java dependencies has been a tedious manual chore.</p>
+              <p>In JBoss Tools 4.0, we&#8217;ve been toying with a new Classpath Dependency conversion mechanism, hooked to the maven conversion process aforementioned. Select a legacy Eclipse Java project, right-click then &#8220;Configure &gt; Convert to Maven &#8230;&#8221;. After selecting the project&#8217;s maven coordinate, a new Wizard will pop up, trying to identify all the project&#8217;s classpath entries as their equivalent Maven dependencies :</p>
+              <p><img src="./images/dependency_conversion.png" alt="" /></p>
+              <p>Here is how it works currently:</p>
+              <ul>
+              	<li>Upon display, the wizard spawns a bunch of identification requests in parallel</li>
+              	<li>Identified dependencies are then resolved by Maven against the current settings.xml known repositories. If they don&#8217;t resolve, a warning will be displayed</li>
+              	<li>Unidentified dependencies appear with a red icon</li>
+              	<li>Double-clicking on any Maven dependency will open a dialog page to edit the dependency&#8217;s details (groupId, artifactId, version, scope &#8230;).</li>
+              </ul>
+              <p>The identification mechanism itself is based on a refactored version of our previous <a href="http://docs.jboss.org/tools/whatsnew/maven/maven-news-3.3.0.Beta3.html">Source Lookup feature</a> and tries several identification methods :</p>
+              <ul>
+              	<li>Checks if the jar contains maven descriptors under META-INF/maven.</li>
+              	<li>Checks if the SHA1 checksum of the jar can be found in m2e&#8217;s nexus indexes.</li>
+              	<li>Checks if the SHA1 checksum of the jar can be identified from one of the remote Nexus repository instances defined in Window &gt; Preferences &gt; JBoss Tools &gt; Remote Repositories.</li>
+              </ul>
+              <p>Once you click Finish, any selected dependencies will be added to the generated pom.xml. If you checked &#8220;Delete classpath entries from project&#8221;, all the project classpath entries will be removed from the eclipse classpath, as we expect the Maven Dependencies Library to provide all these dependencies.</p>
+              <p><strong>Be aware this is a very alpha quality work-in-progress</strong>. For instance, UI freezes should be expected in this first iteration, caused by the Maven resolution part; &#8220;In-progress&#8221; Identification status is not correclty reported.</p>
+              <p>You can contribute to improve that feature by testing and reporting bug / enhancement requests to JIRA, using the maven_conversion label.</p>
+              <p>As a final note, this conversion tool is made to help you kickstart your project migration to Maven, but won&#8217;t solve all your problems :</p>
+              <p>the identification mechanism will not identify everything (for instance, jar that are &#8220;classifier&#8221; versions of an artifact can not be identified).<br />
+              after all the dependencies have been added to your pom.xml, it&#8217;s your responsibility to prune them from any unwanted transitive dependencies.</p>
+              <div class="related_jira">Related JIRA: <a href="https://issues.jboss.org/browse/JBIDE-8973">JBIDE-8973</a>.</div></dd>
+              </dl>
             </div>
-          </section>
-          <section class="span4">
-            <header>
-              <h3>
-                <i class="icon-pencil"></i>
-                <a href="http://maxandersen.github.com/jbosstools-website/blog">
-                  Latest posts
-                </a>
-              </h3>
-            </header>
-            <div class="post">
-              <div class="title-wrapper">
-                <img class="img-polaroid" src="https://community.jboss.org/people/fbricon/avatar/32.png">
-                <div class="title">
-                  <h4>
-                    <a href="http://maxandersen.github.com/jbosstools-website/blog/2013/07/23/jbosstools_41_and_Red_Hat_Developer_Studio_7_go_GA.html">JBoss Tools 4.1 and Red Hat JBoss Developer Studio 7 go GA</a>
-                  </h4>
-                  <div class="author">
-                    <!-- there is only one author per post but the author splitter adds an array here -->
-                    posted by
-                    <strong>Fred Bricon</strong>
-                    on
-                    <strong>Jul 23, 2013.</strong>
-                  </div>
-                </div>
-              </div>
-              <div class="footer right">
-                <div class="btn btn-small">
-                  <a class="block" href="/blog/2013/07/23/jbosstools_41_and_Red_Hat_Developer_Studio_7_go_GA.html">
-                    Read more &raquo;
-                  </a>
-                </div>
-              </div>
-              <hr>
-            </div>
-            <div class="post">
-              <div class="title-wrapper">
-                <img class="img-polaroid" src="https://community.jboss.org/people/maxandersen/avatar/32.png">
-                <div class="title">
-                  <h4>
-                    <a href="http://maxandersen.github.com/jbosstools-website/blog/2012/09/17/return-of-jboss-tools.html">The Return of JBoss Tools</a>
-                  </h4>
-                  <div class="author">
-                    <!-- there is only one author per post but the author splitter adds an array here -->
-                    posted by
-                    <strong>Max Rydahl Andersen</strong>
-                    on
-                    <strong>Sep 17, 2012.</strong>
-                  </div>
-                </div>
-              </div>
-              <div class="footer right">
-                <div class="btn btn-small">
-                  <a class="block" href="/blog/2012/09/17/return-of-jboss-tools.html">
-                    Read more &raquo;
-                  </a>
-                </div>
-              </div>
-              <hr>
-            </div>
-          </section>
-          <section class="span4">
-            <header>
-              <h3>
-                <i class="icon-globe"></i>
-                Upcoming Events
-              </h3>
-            </header>
-            <div class="item justify">
-              <h4>
-                <a href="Ludwigsburg, Germany">EclipseCon Europe</a>
-              </h4>
-              <strong>
-                October 29-31, 2013
-                in
-                Ludwigsburg, Germany
-              </strong>
-            </div>
-          </section>
+          </div>
         </div>
       </div>
     </div>

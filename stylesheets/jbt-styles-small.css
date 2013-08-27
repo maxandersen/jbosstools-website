@@ -1,0 +1,14 @@
+/* line 3, /Users/max/code/jbosstools/jbosstools-website/stylesheets/jbt-styles-small.scss */
+#project-banner-wrapper {
+  min-width: 768px;
+}
+
+/* line 7, /Users/max/code/jbosstools/jbosstools-website/stylesheets/jbt-styles-small.scss */
+#menu-wrapper {
+  min-width: 768px;
+}
+
+/* line 11, /Users/max/code/jbosstools/jbosstools-website/stylesheets/jbt-styles-small.scss */
+#content-wrapper {
+  min-width: 768px;
+}
