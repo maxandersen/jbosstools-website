@@ -11,12 +11,13 @@ before_script:
 - base64 --decode --ignore-garbage ~/.ssh/id_rsa_base64 > ~/.ssh/id_rsa
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host filemgmt.jboss.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
-- echo doing export $DEMO $id_rsa00
+script: rake travis
 env:
   global:
   - secure: WDLFyxn62s8Oh5UiVt5PFvw4MznhPcbHhfV/FCqjDbRAjR+Ar7rZRdr0FRymt0g0uQyTuzggO+zTY2R4IUoPyPspD40Ll3N9vTkmAbWD3o5WyuMbVEyLvasstLI0bVbw6LAkFikyOCxQStVXT7+w9HMb6/4nNkb9l/gUfL89xxA=
   - secure: XA4N8V4lkHZxKOuHQMPts57ESDXcnseZ4O2ZtFdMls/lYIOcQ6gpMwDtrrQZBE+6BV/4QTrs5/WYn3lyyTt39pGH6vN1UUpcpOyoTw6CatFw4gLCLtxFB/3jA4Busrw3bIoiH0V5rQIWria8cBzOUBVZ/026+vb+7hptNahu7fw=
   - secure: LjPIApSURqDmm7f9sGtuO3GB5pucYW4zER4WGwL+96+d6O2kwQSuDAYkxup796EprCNb4+iiodQejcM8WH0T24rEExtnxeGqXH4IFG37OXMFnUlEKnx5O9GbxihiE3X3oTqJqlSbnxyPm+K/W9Y98p4SVsf4gO9YFZXClooSx4A=
+  #ssh key for jbosstools/maxandersen id_rsa{00-22}
   - secure: d1G3dn+Mu4kTSVd8D29pglr2XtD92pi/PtuJWOyK00kMY8iWnkA4xJIdhc1B4Mr4JlkBPMFYa+mGAEeFlemgEG9X4Qt/R9c6HPrT6zgIkMD1IWF3QRWAXvOZpSfzFa0LbeQfL+tK4t2EaNea2zwjd5iG5DX8mzFS7aZoF9VwKg0=
   - secure: Iu0D+cCLLpMjwg6qeqAEt39lTbH1ztMHT/btjZ8Eh3Y5FV2i1eI3SAQYElx8C/Lkh6SycgkHkBURdlUBqWSbkA6vpKwt9WiY5E/2neL5l97/rFzwaHj7cn9/Bifklmp6RnyhRLFmbS0bCeXIftcu6xC4AubfvejlqAtmAe9q6q0=
   - secure: FeH59rk38Ws42Zm96wc+ctHbNCW8Rgl4GaB0bazDiGLVzJ3BPJ9EdmEWzH4Q4fOflqON9ygAcN6NsuLM+V6ehkisBOZhvm1b2IDfAHYXG9m0xQNuQ/zZcCDscdCXWF1vtRbMJ39SbQ50trGBNjBO4E7l/Dcx7xikYCfRP6Ke4XI=
