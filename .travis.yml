@@ -13,10 +13,9 @@ before_script:
 - echo -e "Host filemgmt.jboss.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - cat ~/.ssh/id_rsa
 - echo doing export $DEMO
-#script: rake travis
 env:
   global:
   - secure: WDLFyxn62s8Oh5UiVt5PFvw4MznhPcbHhfV/FCqjDbRAjR+Ar7rZRdr0FRymt0g0uQyTuzggO+zTY2R4IUoPyPspD40Ll3N9vTkmAbWD3o5WyuMbVEyLvasstLI0bVbw6LAkFikyOCxQStVXT7+w9HMb6/4nNkb9l/gUfL89xxA=
   - secure: XA4N8V4lkHZxKOuHQMPts57ESDXcnseZ4O2ZtFdMls/lYIOcQ6gpMwDtrrQZBE+6BV/4QTrs5/WYn3lyyTt39pGH6vN1UUpcpOyoTw6CatFw4gLCLtxFB/3jA4Busrw3bIoiH0V5rQIWria8cBzOUBVZ/026+vb+7hptNahu7fw=
   - secure: LjPIApSURqDmm7f9sGtuO3GB5pucYW4zER4WGwL+96+d6O2kwQSuDAYkxup796EprCNb4+iiodQejcM8WH0T24rEExtnxeGqXH4IFG37OXMFnUlEKnx5O9GbxihiE3X3oTqJqlSbnxyPm+K/W9Y98p4SVsf4gO9YFZXClooSx4A=
-  - secure: j2SvOP1TkIEY48V4E/9+Mko50wUDkVbHybxzNrY7r3GmH/ghE3uogilNHrjANLQTvaDLdniDpLTvbHn+IUIiZQCHGmLhv71mZCJa0346nvQwfa4JrqDST/kIgcuVeHJOSXj0Hcuzh4q4HzpLdtKLTuixvpDZAwXESjFD9FuyicY=
+  - secure: GXD6SXKoLTVzta6JOQb4Di3MVS+j9aw9HOyVDV31X4LBBoNSaAe0OAcl+YIyZF+Dx+kAYbex+cLuecLriH6fh/RW+jeTN3veBRYofJLJZv+1Q7+v6FxZxV520fpEQ/yvAy6bdzyi3nGS4CPmXvUtGuWRxg9IFnmBFyahjseRU4Y=
