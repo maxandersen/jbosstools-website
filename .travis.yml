@@ -10,6 +10,8 @@ before_script:
   # Disable SSH server fingerprint verification
   - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - cat ~/.ssh/id_rsa
+  - echo doing export
+  - export
 branches:
   only:
   - master
