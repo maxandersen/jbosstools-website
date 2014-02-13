@@ -13,6 +13,7 @@ before_script:
 branches:
   only:
   - master
+  - staging
 env:
   global:
   - secure: WDLFyxn62s8Oh5UiVt5PFvw4MznhPcbHhfV/FCqjDbRAjR+Ar7rZRdr0FRymt0g0uQyTuzggO+zTY2R4IUoPyPspD40Ll3N9vTkmAbWD3o5WyuMbVEyLvasstLI0bVbw6LAkFikyOCxQStVXT7+w9HMb6/4nNkb9l/gUfL89xxA=
