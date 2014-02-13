@@ -12,9 +12,7 @@ before_script:
 - chmod 600 ~/.ssh/id_rsa
 - echo -e "Host filemgmt.jboss.org\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - cat ~/.ssh/id_rsa
-- echo doing export
-- export
-- echo demo: $DEMO
+- echo doing export $DEMO
 #script: rake travis
 env:
   global:
