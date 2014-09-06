@@ -1,5 +1,6 @@
 # JBoss.org extensions
 require 'asciidoctor_extensions'
+require 'asciidoctor-diagram'
 require 'wget_wrapper'
 require 'js_minifier'
 require 'css_minifier'

@@ -5,6 +5,18 @@
 
 A few days ago we released link:2014-07-28-beta3-for-luna[JBoss Tools 4.2 Beta3] for Eclipse Luna.
 
+["plantuml", "asciidoctor-diagram-classes", "png"]
+---------------------------------------------------------------------
+class BlockProcessor
+class DiagramBlock
+class DitaaBlock
+class PlantUmlBlock
+
+BlockProcessor <|-- DiagramBlock
+DiagramBlock <|-- DitaaBlock
+DiagramBlock <|-- PlantUmlBlock
+---------------------------------------------------------------------
+
 In that update was also a change to our update site urls that we recommend for testing our Nightly builds.
 
 In the past if you used `http://download.jboss.org/jbosstools/updates/nightly/core/master/` we recommend 

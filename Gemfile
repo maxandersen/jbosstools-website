@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # older ruby versions have problems! Lets be specific. use 'rvm use 1.9.3@sites --create' to use specific ruby version
-ruby '1.9.3'
+ruby '2.0.0'
 gem 'awestruct', '0.5.4.rc3'         # Framework for creating static HTML sites
 gem 'uglifier', '~> 2.0.1'        # Ruby wrapper for UglifyJS JavaScript compressor
 gem 'cssminify', '~> 1.0.2'        # CSS compression using YUI compressor
@@ -11,6 +11,7 @@ gem 'htmlcompressor', '~> 0.0.3' # Adds in HTML minification, helps remove the w
 gem 'RedCloth'
 gem 'listen', '~> 1.0'
 gem 'asciidoctor', '1.5.0'
+gem 'asciidoctor-diagram', '1.3.0.preview.1'
 gem 'slim'
 gem 'less'
 #gem 'therubyracer'

@@ -7,6 +7,9 @@ GEM
     Platform (0.4.0)
     RedCloth (4.2.9)
     asciidoctor (1.5.0)
+    asciidoctor-diagram (1.3.0.preview.1)
+      asciidoctor (~> 1.5.0)
+      rjb (~> 1.4.8)
     awestruct (0.5.4.rc3)
       bootstrap-sass (>= 2.3.1.0)
       compass (>= 0.12.1)
@@ -82,6 +85,7 @@ GEM
     rest-client (1.7.2)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    rjb (1.4.9)
     ruby-s3cmd (0.1.5)
     sass (3.4.1)
     slim (2.0.3)
@@ -103,6 +107,7 @@ PLATFORMS
 DEPENDENCIES
   RedCloth
   asciidoctor (= 1.5.0)
+  asciidoctor-diagram (= 1.3.0.preview.1)
   awestruct (= 0.5.4.rc3)
   coderay
   cssminify (~> 1.0.2)
