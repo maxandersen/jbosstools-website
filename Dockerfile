@@ -2,7 +2,10 @@ FROM centos:centos7
 MAINTAINER Max Rydahl Andersen <max@jboss.org>
 
 # install deps required by our build
-RUN yum install -y epel-release which tar bzip2 gcc ruby-devel libxml2 libxml2-devel libxslt libxslt-devel libcurl-devel git nodejs
+RUN yum install -y epel-release which tar bzip2 gcc ruby-devel libxml2 libxml2-devel libxslt libxslt-devel libcurl-devel git
+
+# when running with above nodejs was not available
+RUN yum install nodejs
 
 # Add RVM keys
 RUN gpg2 --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
