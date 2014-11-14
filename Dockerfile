@@ -5,7 +5,7 @@ MAINTAINER Max Rydahl Andersen <max@jboss.org>
 RUN yum install -y epel-release which tar bzip2 gcc ruby-devel libxml2 libxml2-devel libxslt libxslt-devel libcurl-devel git
 
 # when running with above nodejs was not available
-RUN yum install nodejs
+RUN yum install -y nodejs
 
 # Add RVM keys
 RUN gpg2 --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
