@@ -1,21 +1,46 @@
-FROM goldmann/awestruct
+FROM centos:centos7
+MAINTAINER Max Rydahl Andersen <max@jboss.org>
 
-WORKDIR /home/awestruct
+# install deps required by our build
+RUN yum install -y epel-release which tar bzip2 gcc ruby-devel libxml2 libxml2-devel libxslt libxslt-devel libcurl-devel git
 
-ENV HOME /home/awestruct
-ENV RUBY_VERSION 1.9.3
-ENV AWESTRUCT_VERSION 0.5.5
+# Add RVM keys
+RUN gpg2 --keyserver hkp://keys.gnupg.net --recv-keys D39DC0E3
 
-ADD ./Gemfile Gemfile
-ADD ./Gemfile.lock Gemfile.lock
+# Install RVM
+RUN curl -L get.rvm.io | bash -s stable
+RUN /bin/bash -l -c "rvm requirements && rvm autolibs enable"
 
-RUN bash -l -c "rvm install $RUBY_VERSION"
-RUN bash -l -c "rvm use $RUBY_VERSION"
-RUN bash -l -c "rvm gemset create jbosstools-website"
-RUN bash -l -c "gem install bundler"
-RUN bash -l -c "bundle install"
+# Install Ruby
+ADD ./.ruby-version /tmp/
+ADD ./.ruby-gemset /tmp/
+RUN /bin/bash -l -c "rvm install `cat /tmp/.ruby-version`"
+
+## Build setup
+# Build the current gemset (user will only need to build the difference 
+ADD ./Gemfile /tmp/
+ADD ./Gemfile.lock /tmp/
+ADD ./Rakefile  /tmp/
+WORKDIR /tmp/
+RUN /bin/bash -l -c "bundle install"
+
+# Enable GPG support
+VOLUME /gnupg
+ENV GNUPGHOME /gnupg
+RUN touch /tmp/gpg-agent.conf
+RUN echo 'export GPG_TTY=$(tty); eval $(gpg-agent --daemon --no-use-standard-socket --options /tmp/gpg-agent.conf );' >> ~/.bash_profile
+
+# Add the volume for the actual project
+VOLUME /jbosstools-website
+WORKDIR /jbosstools-website
+
+# Prevent encoding errors
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
 
 EXPOSE 4242
 
-CMD ["bash", "--login"]
+ENTRYPOINT [ "/bin/bash", "-l", "-c" ]
+CMD [ "rake", "setup", "preview" ]
 
