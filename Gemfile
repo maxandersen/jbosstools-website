@@ -8,21 +8,22 @@ ruby '2.2.1'
 gem 'awestruct', :git => 'git://github.com/awestruct/awestruct.git', :branch => 'master'
 
 
-gem 'uglifier', '~> 2.0.1'        # Ruby wrapper for UglifyJS JavaScript compressor
+gem 'uglifier', '~> 2.0'        # Ruby wrapper for UglifyJS JavaScript compressor
 gem 'cssminify', '~> 1.0.2'        # CSS compression using YUI compressor
 gem 'rb-fsevent', '~> 0.9.3'        # FSEvents API with Signals catching (without RubyCocoa)
-gem 'kramdown', '~> 1.0.1' # Kramdown works on all platforms, rdiscount only on mri
+gem 'kramdown', '~> 1.0' # Kramdown works on all platforms, rdiscount only on mri
 gem 'htmlcompressor', '~> 0.0.3' # Adds in HTML minification, helps remove the warning on awestruct startup
 gem 'RedCloth'
-gem 'listen'
-gem 'asciidoctor', '1.5.2'
+gem 'listen', '~> 2.0'
+gem 'asciidoctor', '~> 1.5'
 gem 'slim'
 gem 'less'
 #gem 'therubyracer'
-gem 'tilt'
+gem 'tilt', '~> 2.0'
 gem 'coderay'
 gem 'html_press', '~> 0.8.1'
 gem 'git' # required to run the '-deploy' option
+gem 'nokogiri', '~> 1.5.10'
 
 gem 'bootstrap-sass'
 gem 'compass'

@@ -58,26 +58,9 @@ module Awestruct
           return input
         end
 
-        oldFileName = File.basename(page.output_path).to_s
-
-        # Create new file name with suffix added
-        newFileName = oldFileName.slice(0..oldFileName.length-4)+"min.css"
-        newOutputPath = File.join(File.dirname(page.output_path.to_s),newFileName)
-
-        # Create a temporary file with the merged content.
-        tmpOutputPath = File.join( "./_tmp/" , newFileName)
-        tmpOutputFile = File.new(tmpOutputPath,"w")
-        tmpOutputFile.write(output)
-        tmpOutputFile.close
-
-        # Add the temporary file to the list of pages for rendering phase.
-        newPage = site.engine.load_page(tmpOutputPath)
-        newPage.source_path = tmpOutputPath
-        newPage.output_path = newOutputPath
-        site.pages << newPage
-
+        page.output_path = page.output_path.gsub('.css', '.min.css')
         # We return the input because we leave the original file untouched
-        input
+        output
       end
     end
   end

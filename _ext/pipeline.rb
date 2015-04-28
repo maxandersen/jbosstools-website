@@ -4,7 +4,7 @@ require 'wget_wrapper'
 require 'js_minifier'
 require 'css_minifier'
 require 'html_minifier'
-#require 'file_merger'
+require 'file_merger'
 #require 'less_config'
 require 'breadcrumb'
 #require 'symlinker'
@@ -27,6 +27,7 @@ require 'videos'
 require 'uri_helper'
 require 'build_info'
 require 'atomizer_helper'
+require 'nokogiri'
 
 Awestruct::Extensions::Pipeline.new do
   
@@ -37,10 +38,10 @@ Awestruct::Extensions::Pipeline.new do
   # JBoss.org extensions
   helper Awestruct::Extensions::Breadcrumb
   extension Awestruct::Extensions::WgetWrapper.new
-  transformer Awestruct::Extensions::JsMinifier.new
-  transformer Awestruct::Extensions::CssMinifier.new
-  transformer Awestruct::Extensions::HtmlMinifier.new
-  #extension Awestruct::Extensions::FileMerger.new
+  transformer Awestruct::Extensions::JsMinifier.new if site.js_minifier == 'enabled'
+  transformer Awestruct::Extensions::CssMinifier.new if site.css_minifier == 'enabled'
+  #transformer Awestruct::Extensions::HtmlMinifier.new
+  extension Awestruct::Extensions::FileMerger.new
   #extension Awestruct::Extensions::LessConfig.new
   #extension Awestruct::Extensions::Symlinker.new
   
