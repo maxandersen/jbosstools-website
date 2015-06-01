@@ -1,0 +1,154 @@
+= How I learned to stop worrying and love Gerrit
+:page-layout: blog
+:page-author: maxandersen
+:page-tags: [gerrit, eclipse, jbosscentral]
+
+Love might be a strong word, but I'm definitely liking Gerrit the more I use it.
+
+Gerrit is the review system used at places like Eclipse.org,
+OpenStack.org, Android and
+http://en.wikipedia.org/wiki/Gerrit_%28software%29#Notable_users[others].
+
+Unfortunately many feel the UI is daunting and the workflow feels
+arcane, especially if used to the more "sleek" GitHub web-ui.
+
+If you start reading about how to use Gerrit you will be met with
+details like setting up a git commit hook, Gerrit Change id's, ssh
+keys, etc. all very dauting.
+
+Lucikly I found this tool called
+http://www.mediawiki.org/wiki/Gerrit/git-review[git-review] that makes
+it so easy and you don't need to learn all the details up front.
+
+`git-review` is a Python script and runs on all major platforms. Installation instructions can be found http://www.mediawiki.org/wiki/Gerrit/git-review[here].
+
+== Clone a repo
+
+In this example I'm going to use Eclipse Linux Tools as an example, but the same steps applies for any other git repo that uses Gerrit.
+
+First, as normal you need a clone of the main git repository.
+
+----
+git clone git://git.eclipse.org/gitroot/linuxtools/org.eclipse.linuxtools
+----
+
+== Setup Gerrit remote
+TIP: one of the nice things about `git-review` is that you can continue to just use the normal git clone url's; git-review will take care of all the handling of git remote setups.
+
+I assume you already have the right ssh keys etc. configured to access/push to the relevant Gerrit repository. When you have that
+you can add a `gerrit` remote, for linux tools that is:
+
+----
+git remote add gerrit ssh://mandersen@git.eclipse.org:29418/linuxtools/org.eclipse.linuxtools
+----
+
+Notice that in this case I'm using `ssh` and the port `29418` which is the default Gerrit port.
+
+When you have done this, run `git-review` to check everything is fine. It will verify it can
+connect etc.
+
+----
+git review -s
+----
+
+If nothing happens it means it found everything to be okey. If you are missing ssh setup or
+have a badly typed Gerrit remote you would get an error.
+
+=== Do changes
+
+To do a change you do as normal, create  a topic/feature branch:
+
+----
+git checkout -b bug_1234567
+<change files>
+git commit -a
+----
+
+When you run this commit you should notice that if you run `git show HEAD` it will show
+whatever commit message you entered plus a line with a `Change-Id` like:
+
+----
+Change-Id: Ia69db21953a813b46f6ffe635fcd2e9326d05ef2
+----
+
+This `Change-Id` is what Gerrit will use ot keep track of which commits are part of what overall change.
+
+=== Run git-review
+
+When you have done all the changes you need to do and just used `git --amend` to keep the changes to commit down to a single commit (for simplicity)
+you run `git-review`:
+
+----
+remote: Resolving deltas: 100% (2/2)
+remote: Processing changes: refs: 1, done
+remote: ----------
+remote: Reviewing commit: ec8989ea
+remote: Authored by: Max Rydahl Andersen <manderse@redhat.com>
+remote:
+remote: The author is not a committer on the project.
+remote: The author has a current Contributor License Agreement (CLA) on file.
+remote: error: The author has not "signed-off" on the contribution.
+remote: Please see http://wiki.eclipse.org/CLA
+To ssh://mandersen@git.eclipse.org:29418/linuxtools/org.eclipse.linuxtools
+ ! [remote rejected] HEAD -> refs/publish/master/test (The contributor must "sign-off" on the contribution.)
+error: failed to push some refs to 'ssh://mandersen@git.eclipse.org:29418/linuxtools/org.eclipse.linuxtools'
+----
+
+Whoops - something went wrong. It says I have not signed-off.
+
+This is a requirement on Eclipse Foundation and other repositories so we need to do that too.
+
+----
+git commit --signoff --amend
+----
+
+This will just signoff the last commit which is sufficient.
+
+Now when I run `git-review` I get:
+
+----
+remote: Resolving deltas: 100% (2/2)
+remote: Processing changes: new: 1, refs: 1, done
+remote: ----------
+remote: Reviewing commit: 139f8ae2
+remote: Authored by: Max Rydahl Andersen <manderse@redhat.com>
+remote:
+remote: The author is not a committer on the project.
+remote: The author has a current Contributor License Agreement (CLA) on file.
+remote: The author has "signed-off" on the contribution.
+remote:
+remote: This commit passes Eclipse validation.
+remote:
+remote: New Changes:
+remote:   https://git.eclipse.org/r/49271
+remote:
+To ssh://mandersen@git.eclipse.org:29418/linuxtools/org.eclipse.linuxtools
+ * [new branch]      HEAD -> refs/publish/master/test
+----
+
+
+== Tip to Eclipse and other Gerrit based projects
+
+It would be nice if projects using Gerrit would put a `.gitreview` file to the root of their projects.
+For Linux Tools the file would look like:
+
+..gitreview
+----
+[gerrit]
+host=git.eclipse.org/r
+port=29418
+project=linuxtools/org.eclipse.linuxtools
+----
+
+Then when using `git review -s` everything would be configured automatically.
+
+== Why are you not using eGit for this ?
+
+I could, pushing to Gerrit is built into egit but it is not trivial to
+enable.  I've opened
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=469211[Bug 469211] and
+https://bugs.eclipse.org/bugs/show_bug.cgi?id=469210[Bug 469210] to
+improve the out-of-box support for this.
+
+
+
